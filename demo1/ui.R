@@ -3,29 +3,31 @@ library(shinydashboard)
 
 # Define UI for application that draws a histogram
 dashboardPage(
-    dashboardHeader(title = "Algoritmos en la Ciencia de Datos"),
+    dashboardHeader(title = "ALG DS"),
     dashboardSidebar(
         sidebarMenu(
-            menuItem("Ceros", tabName = "Ceros"),
-            menuItem("Derivación", tabName = "Derivacion")
+            menuItem("Bisección", tabName = "Ceros"),
+            menuItem("Newton - Raphson", tabName = "Derivacion")
         )
     ),
     dashboardBody(
         tabItems(
             tabItem("Ceros",
-                    h1("Método de Newton"),
+                    h1("Algoritmo - Metodo de la Bisección"),
                     box(textInput("ecuacion", "Ingrese la Ecuación"),
-                        textInput("initVal", "X0"),
-                        textInput("Error", "Error")),
-                    actionButton("nwtSolver", "Newton Solver"),
+                        textInput("initVal", "Intervalor a,b"),
+                        textInput("Error", "Número máximo de Iteraciones"),
+                        textInput("epsilon", "Tolerancia")),
+                    actionButton("nwtSolver", "Encontrar Solucion Bisección"),
                     tableOutput("salidaTabla")),
             
             tabItem("Derivacion",
-                    h1("Diferencias Finitas"),
+                    h1("Algoritmo - Metodo de Newton-Raphson"),
                     box(textInput("difFinEcu", "Ingrese la Ecuación"),
-                    textInput("valorX", "x"),
-                    textInput("valorH", "h")),
-                    actionButton("diferFinEval", "Evaluar Derivada"),
+                    textInput("valorX", "Solucion inicial X_0"),
+                    textInput("valorH", "Numero Máximo de Iteraciones"),
+                    textInput("valorH", "Tolerancia")),
+                    actionButton("diferFinEval", "Encontrar solución Newton"),
                     textOutput("difFinitOut"))
         )
     )
