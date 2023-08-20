@@ -3,32 +3,31 @@ library(shinydashboard)
 
 # Define UI for application that draws a histogram
 dashboardPage(
-    dashboardHeader(title = "ALG DS"),
-    dashboardSidebar(
-        sidebarMenu(
-            menuItem("Bisección", tabName = "Ceros"),
-            menuItem("Newton - Raphson", tabName = "Derivacion")
-        )
-    ),
-    dashboardBody(
-        tabItems(
-            tabItem("Ceros",
-                    h1("Algoritmo - Metodo de la Bisección"),
-                    box(textInput("ecuacion", "Ingrese la Ecuación"),
-                        textInput("initVal", "Intervalor a,b"),
-                        textInput("Error", "Número máximo de Iteraciones"),
-                        textInput("epsilon", "Tolerancia")),
-                    actionButton("nwtSolver", "Encontrar Solucion Bisección"),
-                    tableOutput("salidaTabla")),
-            
-            tabItem("Derivacion",
-                    h1("Algoritmo - Metodo de Newton-Raphson"),
-                    box(textInput("difFinEcu", "Ingrese la Ecuación"),
-                    textInput("valorX", "Solucion inicial X_0"),
-                    textInput("valorH", "Numero Máximo de Iteraciones"),
-                    textInput("valorH", "Tolerancia")),
-                    actionButton("diferFinEval", "Encontrar solución Newton"),
-                    textOutput("difFinitOut"))
-        )
+  dashboardHeader(title = "ALG DS"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Bisección", tabName = "Bisection"),
+      menuItem("Newton - Raphson", tabName = "Derivacion")
     )
+  ),
+  dashboardBody(
+    tabItems(
+      tabItem("Bisection",
+              h1("Algoritmo - Metodo de la Bisección"),
+              box(textInput("ecuacion_bisection", "Ingrese la Ecuación"),
+                  textInput("intervalo", "Intervalo a,b"),
+                  textInput("iter_max", "No. de Iteraciones maximas"),
+                  textInput("epsilon", "Tolerancia")),
+              actionButton("bisection_solver", "Bisection Solver"),
+              tableOutput("salidaTabla")),
+      
+      tabItem("Derivacion",
+              h1("Diferencias Finitas"),
+              box(textInput("difFinEcu", "Ingrese la Ecuación"),
+                  textInput("valorX", "x"),
+                  textInput("valorH", "h")),
+              actionButton("diferFinEval", "Evaluar Derivada"),
+              textOutput("difFinitOut"))
+    )
+  )
 )
