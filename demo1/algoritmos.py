@@ -213,9 +213,9 @@ def fun_newton_rap(funcion_string,x_init,iteraciones,dif_delta_init):
 
         error_1=funcion_cadena_expr.subs(X, x_init)
 
-        list_x.append(float(round(x_init_1,4)))
-        list_y.append(float(abs(round(eval_xp,4))))
-        list_itera.append(float(round(cont,4)))
+        list_x.append(float(round(x_init_1,5)))
+        list_y.append(float(abs(round(eval_xp,5))))
+        list_itera.append(float(round(cont,5)))
 
         print("todo bien 3")
 
