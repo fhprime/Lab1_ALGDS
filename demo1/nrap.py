@@ -1,81 +1,15 @@
-import pandas as pd
-import re
+# metodo de NEWTON-RAPHSON
+# definir las variables como strings 
+
 from sympy import *
 
-
-
-
-#Evaluación REGREX
-def evaluate_Fx(str_equ, valX):
-  x = valX
-  #strOut = str_equ
-  strOut = str_equ.replace("x", '*(x)')
-  strOut = strOut.replace("^", "**")
-  out = eval(strOut)
-  print(strOut)
-  return out
-
-#Deferencias finitas para derivadas
-def evaluate_derivate_fx(str_equ, x, h):
-  strOut = str_equ.replace("x", '*(x + h)')
-  strOut = strOut.replace("^", "**")
-  strOut = "-4*(" + strOut + ")"
-  out = eval(strOut)
-  
-  strOut = str_equ.replace("x", '*(x + 2*h)')
-  strOut = strOut.replace("^", "**")
-  out = out + eval(strOut)
-  
-  strOut = str_equ.replace("x", '*(x)')
-  strOut = strOut.replace("^", "**")
-  strOut = "3*(" + strOut + ")"
-  out = out + eval(strOut)
-  
-  out = -out/(2*h)
-  print(out)
-  return out
-
-#Resolverdor de Newton
-def BisectionSolverX(funcion,intervalo,max_iteraciones,tolerancia):
-  function_changed = funcion.replace('^','**')
-  interval_separated = intervalo.split(',')
-  interval_separated = [float(element) for element in interval_separated]
-  max_iteraciones = float(max_iteraciones)
-  tolerancia = float(tolerancia)
-  e = 2.71828
-  k = 0
-  a = interval_separated[0]
-  b = interval_separated[1]
-  x_k = (a + b)/2
-  x = x_k
-  list_data = []
-  n_iter = 0
-  while (k<max_iteraciones) and abs(eval(function_changed)):
-      x = a
-      F_a = eval(function_changed)
-      x = x_k
-      F_xk = eval(function_changed)
-      if F_a*F_xk < 0 :
-          b = x_k
-      else:
-          a = x_k
-      k = k + 1
-      x_k = (a + b)/2
-      n_iter = n_iter + 1
-      iter_values = list_data.append([n_iter,round(x_k,4),round(abs(F_xk),4)])
-  df = pd.DataFrame(list_data, columns=['Iter','x_k','|F(x_k)|'])
-  return df
-
-def add(a, b):
-  a = int(a)
-  b = int(b)
-  resultado = a + b
-  return "El resultado es: " + str(resultado)
+import pandas as pd
 
 
 
 
-def fun_newton_rap(funcion_string,x_init,iteraciones,dif_delta_init):
+
+def fun_newton_rap(funcion_string,x_init,dif_delta_init,iteraciones):
 
 
     try:
@@ -213,38 +147,33 @@ def fun_newton_rap(funcion_string,x_init,iteraciones,dif_delta_init):
 
         error_1=funcion_cadena_expr.subs(X, x_init)
 
-        list_x.append(round(x_init_1,4))
-        list_y.append(abs(round(eval_xp,4)))
-        list_itera.append(round(cont,4))
+        list_x.append(x_init_1)
+        list_y.append(eval_xp)
+        list_itera.append(cont)
 
         print("todo bien 3")
 
-
         if abs(error_1)<dif_delta_init:
-          
-          lista = [[list_itera[i], list_x[i], list_y[i]] for i in range(len(list_itera))]
-      
-          df = pd.DataFrame(lista, columns=['Iter','x_k','|F(x_k)|'])
-      
-          #print(df)
-      
-          return df
 
+            # Crear un diccionario a partir de las listas
+            datos = {
+                'itera': list_itera,
+                'X': list_x,
+                'error': list_y
+                       
+            }
 
+            # Crear un DataFrame a partir del diccionario
+            df = pd.DataFrame(datos)
+
+            print(df)
+
+            return df
+            
         cont+=1
+    
 
-
-    # Crear un diccionario a partir de las listas
-    #datos = {
-    #    'itera': list_itera,
-    #    'X': list_x,
-    #    'error': list_y
-    #           
-    #}
-
-    # Crear un DataFrame a partir del diccionario
-    #df = pd.DataFrame(datos)
-
+##--------- inicio ----- ingreso de variables ----------------
 
 # funcion_string='2x-e^(-x)' # funcion inicial --- 10x^2+3e^(-5x) ----
 
@@ -258,15 +187,4 @@ def fun_newton_rap(funcion_string,x_init,iteraciones,dif_delta_init):
 
 # ##--------- fin ----- ingreso de variables ----------------
 
-# print(fun_newton_rap(funcion_string,x_init,itera,dif_delta_init))
-
-
-# funcion = '2*x-e^(-x)' # Derivada de la funcion del laboratorio 
-# intervalo = '0,1'
-# max_iteraciones = '20'
-# tolerancia = '0.000000000001'
-
-
-# datos = BisectionSolverX(funcion,intervalo,max_iteraciones,tolerancia)
-# print(datos)
-    
+# fun_newton_rap(funcion_string,x_init,dif_delta_init,itera)
